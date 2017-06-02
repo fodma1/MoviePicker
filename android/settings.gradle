@@ -1,0 +1,3 @@
+rootProject.name = 'MoviePicker'
+
+include ':app'
