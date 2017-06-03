@@ -75,43 +75,6 @@ export default class Tinder extends Component {
   }
 }
 
-/*export default React.createClass({
-  navigationOptions: {
-    title: 'Welcome',
-  },
-  getInitialState() {
-    return {
-      cards: Cards
-    }
-  },
-  handleYup (card) {
-    console.log(`Yup for ${card.text}`)
-  },
-  handleNope (card) {
-    console.log(`Nope for ${card.text}`)
-  },
-  handleMaybe (card) {
-    console.log(`Maybe for ${card.text}`)
-  },
-  render() {
-    // If you want a stack of cards instead of one-per-one view, activate stack mode
-    // stack={true}
-    return (
-      <SwipeCards
-        cards={this.state.cards}
-
-        renderCard={(cardData) => <Card {...cardData} />}
-        renderNoMoreCards={() => <NoMoreCards />}
-
-        handleYup={this.handleYup}
-        handleNope={this.handleNope}
-        handleMaybe={this.handleMaybe}
-        hasMaybeAction
-      />
-    )
-  }
-})*/
-
 const styles = StyleSheet.create({
   card: {
     flex: 1,
