@@ -3,15 +3,27 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 
 import SwipeCards from './swipe-cards/SwipeCards';
 
-let Card = React.createClass({
+class Card extends Component {
+  constructor(props) {
+      super(props);
+  }
+  _getImageUrl(url) {
+    return url.replace('{{w}}x{{h}}', '260x371');
+  }
   render() {
     return (
-      <View style={[styles.card, {backgroundColor: this.props.backgroundColor}]}>
-        <Text>{this.props.text}</Text>
+      <View style={[styles.card]}>
+        <Text>{this.props.title}</Text>
+        <Image
+          style={{width: 260, height: 371}}
+          source={{uri: this._getImageUrl(this.props.imgUrl)}}
+        />
+        {/*<Text>{ this.state.url }</Text>
+        <Text>{ this.props.imgUrl }</Text>*/}
       </View>
     )
   }
-})
+}
 
 class NoMoreCards extends Component {
   constructor(props) {
@@ -43,8 +55,24 @@ export default class Tinder extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        cards: Cards
+        cards: Cards,
+        movies: [],
       }
+  }
+
+  componentDidMount() {
+    // Fetch Data
+    this._fetchData();
+  }
+
+  _fetchData() {
+    fetch('http://localhost:3000/movies/', {
+      method: 'GET'
+    }).then(res => res.json())
+    .then(data => {
+      console.log(data);
+      this.setState({movies: data});
+    });
   }
 
   handleYup (card) {
@@ -61,7 +89,7 @@ export default class Tinder extends Component {
     // stack={true}
     return (
       <SwipeCards
-        cards={this.state.cards}
+        cards={this.state.movies}
 
         renderCard={(cardData) => <Card {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />}

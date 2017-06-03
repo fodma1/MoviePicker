@@ -1,0 +1,25 @@
+{
+  "movies":[  
+     {  
+        "title":"The Lego Batman Movie",
+         "year":2017,
+         "assetType":"Programme",
+         "catalogSection":"Movies",
+         "imgUrl":"https://images.store.sky.com/api/img/asset/en/66D8BB8A-E4E8-4422-9242-603110084545_19FF0D82-C089-4BA7-A32E-1A430575C6EB_2017-5-31-T7-34-25.jpg?s={{w}}x{{h}}"
+      },
+      {  
+        "title":"Resident Evil: The Final Chapter",
+         "year":2017,
+         "assetType":"Programme",
+         "catalogSection":"Movies",
+         "imgUrl":"https://images.store.sky.com/api/img/asset/en/66D8BB8A-E4E8-4422-9242-603110084545_3E59F0E3-1288-4881-AAB8-9AB45909A556_2017-5-31-T21-59-53.jpg?s={{w}}x{{h}}"
+      },
+      {  
+        "title":"Rings (2017)",
+         "year":2017,
+         "assetType":"Programme",
+         "catalogSection":"Movies",
+         "imgUrl":"https://images.store.sky.com/api/img/asset/en/66D8BB8A-E4E8-4422-9242-603110084545_99AFEAE8-2424-41A3-84FD-F0B34C4DDD3F_2017-6-1-T0-3-45.jpg?s={{w}}x{{h}}"
+      }
+    ]
+}
