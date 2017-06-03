@@ -8,10 +8,6 @@ class Card extends Component {
   constructor(props) {
       super(props);
   }
-  _getImageUrl(url) {
-    return url.replace('{{w}}x{{h}}', '260x371');
-    // {/*source={{uri: this._getImageUrl(this.props.imgUrl)}}*/}
-  }
   render() {
     return (
       <View style={[styles.card]}>
@@ -41,7 +37,14 @@ class NoMoreCards extends Component {
 
 export default class Tinder extends Component {
   static navigationOptions = {
-    title: 'Movie Tinder',
+    tabBarLabel: 'Movie Tinder',
+    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
+    tabBarIcon: ({ tintColor }) => (
+      <Image
+        source={require('./assets/movie.png')}
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
   };
   constructor(props) {
       super(props);
@@ -122,7 +125,7 @@ export default class Tinder extends Component {
   cardRemoved (index) {
     console.log(`The index is ${index}`);
 
-    let CARD_REFRESH_LIMIT = 17;
+    let CARD_REFRESH_LIMIT = 3;
 
     if (this.state.movies.length - index <= CARD_REFRESH_LIMIT + 1) {
       console.log(`There are only ${this.state.movies.length - index - 1} cards left.`);
@@ -149,6 +152,7 @@ export default class Tinder extends Component {
         handleNope={(d) => {this.handleNope(d);}}
         handleMaybe={(d) => {this.handleMaybe(d);}}
         cardRemoved={(d) => {this.cardRemoved(d);}}
+        onClickHandler={() => null}
         hasMaybeAction
       />
     )

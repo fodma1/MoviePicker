@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, AsyncStorage } from 'react-native';
 
 import {
-  StackNavigator,
+  TabNavigator,
 } from 'react-navigation';
 
+import Friends from './Friends';
+import KeyNameSpace from './consts';
 import Login from './Login';
 import Tinder from './Tinder';
-import KeyNameSpace from './consts';
 
-const MoviePicker = StackNavigator({
+const MoviePicker = TabNavigator({
   Tinder: { screen: Tinder },
+  Friends: { screen: Friends },
 });
 
 class MainDispatch extends Component {
