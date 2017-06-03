@@ -18,8 +18,6 @@ class Card extends Component {
           style={{width: 260, height: 371}}
           source={{uri: this._getImageUrl(this.props.imgUrl)}}
         />
-        {/*<Text>{ this.state.url }</Text>
-        <Text>{ this.props.imgUrl }</Text>*/}
       </View>
     )
   }
@@ -39,15 +37,6 @@ class NoMoreCards extends Component {
   }
 }
 
-const Cards = [
-  {text: 'Tomato', backgroundColor: 'red'},
-  {text: 'Aubergine', backgroundColor: 'purple'},
-  {text: 'Courgette', backgroundColor: 'green'},
-  {text: 'Blueberry', backgroundColor: 'blue'},
-  {text: 'Umm...', backgroundColor: 'cyan'},
-  {text: 'orange', backgroundColor: 'orange'},
-]
-
 export default class Tinder extends Component {
   static navigationOptions = {
     title: 'Movie Tinder',
@@ -55,7 +44,6 @@ export default class Tinder extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        cards: Cards,
         movies: [],
       }
   }

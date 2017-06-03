@@ -32,9 +32,6 @@ class MainDispatch extends Component {
   }
 
   async _authenticate() {
-    console.log('auithenticate');
-    const valami = await AsyncStorage.setItem(`${KeyNameSpace}:token`, 'non null');
-    console.log('valami');
     try {
       const token = await AsyncStorage.getItem(`${KeyNameSpace}:token`);
       if (token !== null) {
