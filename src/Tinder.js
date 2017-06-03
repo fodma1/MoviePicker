@@ -113,11 +113,11 @@ export default class Tinder extends Component {
   }
   handleNope (movie) {
     console.log(`Nope for ${movie.text}`);
-    this.setState({dislikes: this.state.dislikes.concat([movie.id])});    
+    this.setState({dislikes: this.state.dislikes.concat([movie.id])});
   }
   handleMaybe (movie) {
     console.log(`Maybe for ${movie.text}`);
-    this.setState({wannaSee: this.state.wannaSee.concat([movie.id])});    
+    this.setState({wannaSee: this.state.wannaSee.concat([movie.id])});
   }
   cardRemoved (index) {
     console.log(`The index is ${index}`);

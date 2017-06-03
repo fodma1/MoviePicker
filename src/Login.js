@@ -37,7 +37,7 @@ export default class Login extends Component {
             var ret = resp.json()
             .then((d) => {console.log('json read', d); return d;}); 
             console.log('db3', ret);
-            return ret;            
+            return ret;
         })
         .then((resp) => {
             if (this.state.route === 'signup') {

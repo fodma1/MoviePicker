@@ -40,7 +40,7 @@ class MainDispatch extends Component {
     } catch (error) {
       console.log(error);
     }
-    this.setState({ loaded: true });    
+    this.setState({ loaded: true });
   }
 
   render() {
