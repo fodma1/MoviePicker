@@ -38,7 +38,7 @@ const Cards = [
 
 export default class Tinder extends Component {
   static navigationOptions = {
-    title: 'Tinder',
+    title: 'Movie Tinder',
   };
   constructor(props) {
       super(props);
