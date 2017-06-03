@@ -36,7 +36,46 @@ const Cards = [
   {text: 'orange', backgroundColor: 'orange'},
 ]
 
-export default React.createClass({
+export default class Tinder extends Component {
+  static navigationOptions = {
+    title: 'Tinder',
+  };
+  constructor(props) {
+      super(props);
+      this.state = {
+        cards: Cards
+      }
+  }
+
+  handleYup (card) {
+    console.log(`Yup for ${card.text}`)
+  }
+  handleNope (card) {
+    console.log(`Nope for ${card.text}`)
+  }
+  handleMaybe (card) {
+    console.log(`Maybe for ${card.text}`)
+  }
+  render() {
+    // If you want a stack of cards instead of one-per-one view, activate stack mode
+    // stack={true}
+    return (
+      <SwipeCards
+        cards={this.state.cards}
+
+        renderCard={(cardData) => <Card {...cardData} />}
+        renderNoMoreCards={() => <NoMoreCards />}
+
+        handleYup={this.handleYup}
+        handleNope={this.handleNope}
+        handleMaybe={this.handleMaybe}
+        hasMaybeAction
+      />
+    )
+  }
+}
+
+/*export default React.createClass({
   navigationOptions: {
     title: 'Welcome',
   },
@@ -71,7 +110,7 @@ export default React.createClass({
       />
     )
   }
-})
+})*/
 
 const styles = StyleSheet.create({
   card: {
