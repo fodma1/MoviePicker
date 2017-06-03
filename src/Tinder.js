@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
 
 import SwipeCards from './swipe-cards/SwipeCards';
-import { APIRoot, TMDBImageUrl } from './consts';
+import { APIRoot, TMDBImageUrl, KeyNameSpace } from './consts';
 
 class Card extends Component {
   constructor(props) {
@@ -52,13 +52,42 @@ export default class Tinder extends Component {
         // Keep it simple
         likes: [],
         dislikes: [],
-        wannasee: [],
+        wannaSee: [],
       }
   }
 
   componentDidMount() {
     // Fetch Data
     this._fetchData(this.state.page);
+  }
+
+  async _updateVotes() {
+    try {
+      var token = await AsyncStorage.getItem(`${KeyNameSpace}:token`);
+    } catch(error) {
+      console.log(`Getting otken failed with ${error}`);
+    }
+
+    fetch(`${APIRoot}/movies/rate`, {
+      method: "POST",
+      body: JSON.stringify({
+        likes: this.state.likes,
+        dislikes: this.state.dislikes,
+        wannasee: this.state.wannaSee,
+      }),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'x-auth': token,
+      }),
+    }).then(resp => resp.text())
+    .then(console.log)
+    .then(() => {
+      this.setState({
+        likes: [],
+        dislikes: [],
+        wannaSee: [],
+      });
+    })
   }
 
   _fetchData(page) {
@@ -80,25 +109,26 @@ export default class Tinder extends Component {
 
   handleYup (movie) {
     console.log(`Yup for ${movie.text}`);
-    this.setState({likes: this.likes + [movie.id]});
+    this.setState({likes: this.state.likes.concat([movie.id])});
   }
   handleNope (movie) {
     console.log(`Nope for ${movie.text}`);
-    this.setState({dislikes: this.dislikes + [movie.id]});    
+    this.setState({dislikes: this.state.dislikes.concat([movie.id])});    
   }
   handleMaybe (movie) {
     console.log(`Maybe for ${movie.text}`);
-    this.setState({wannasee: this.wannasee + [movie.id]});    
+    this.setState({wannaSee: this.state.wannaSee.concat([movie.id])});    
   }
   cardRemoved (index) {
     console.log(`The index is ${index}`);
 
-    let CARD_REFRESH_LIMIT = 3
+    let CARD_REFRESH_LIMIT = 17;
 
     if (this.state.movies.length - index <= CARD_REFRESH_LIMIT + 1) {
       console.log(`There are only ${this.state.movies.length - index - 1} cards left.`);
 
       // Update DB;
+      this._updateVotes();
       // Load more
       this._fetchData(this.state.page);
     }
