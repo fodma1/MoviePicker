@@ -46,7 +46,7 @@ export default class Tinder extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        page: 0,
+        page: 1,
         movies: [],
 
         // Keep it simple
@@ -58,13 +58,13 @@ export default class Tinder extends Component {
 
   componentDidMount() {
     // Fetch Data
-    this._fetchData(0);
+    this._fetchData(this.state.page);
   }
 
   _fetchData(page) {
     let url = `${APIRoot}/movies`;
     if (page) {
-      url += '?page=${page}';
+      url += `?page=${page}`;
     }
     fetch(url, {
       method: 'GET'
@@ -72,7 +72,7 @@ export default class Tinder extends Component {
     .then(data => {
       console.log(data);
       this.setState({
-        movies: this.state.movies.concat(data.results),
+        movies: data.results,
         page: page + 1,
       });
     });
@@ -118,6 +118,7 @@ export default class Tinder extends Component {
         handleYup={(d) => {this.handleYup(d);}}
         handleNope={(d) => {this.handleNope(d);}}
         handleMaybe={(d) => {this.handleMaybe(d);}}
+        cardRemoved={(d) => {this.cardRemoved(d);}}
         hasMaybeAction
       />
     )
