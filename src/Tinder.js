@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 
 import SwipeCards from './swipe-cards/SwipeCards';
+import { APIRoot, TMDBImageUrl } from './consts';
 
 class Card extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Card extends Component {
   }
   _getImageUrl(url) {
     return url.replace('{{w}}x{{h}}', '260x371');
+    // {/*source={{uri: this._getImageUrl(this.props.imgUrl)}}*/}
   }
   render() {
     return (
@@ -16,7 +18,7 @@ class Card extends Component {
         <Text>{this.props.title}</Text>
         <Image
           style={{width: 260, height: 371}}
-          source={{uri: this._getImageUrl(this.props.imgUrl)}}
+          source={{uri: `${TMDBImageUrl}${this.props.poster_path}`}}
         />
       </View>
     )
@@ -56,17 +58,21 @@ export default class Tinder extends Component {
 
   componentDidMount() {
     // Fetch Data
-    this._fetchData();
+    this._fetchData(0);
   }
 
-  _fetchData(page=0) {
-    fetch('http://localhost:3000/movies/', {
+  _fetchData(page) {
+    let url = `${APIRoot}/movies`;
+    if (page) {
+      url += '?page=${page}';
+    }
+    fetch(url, {
       method: 'GET'
     }).then(res => res.json())
     .then(data => {
       console.log(data);
       this.setState({
-        movies: this.state.movies.concat(data),
+        movies: this.state.movies.concat(data.results),
         page: page + 1,
       });
     });
