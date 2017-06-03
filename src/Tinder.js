@@ -44,7 +44,13 @@ export default class Tinder extends Component {
   constructor(props) {
       super(props);
       this.state = {
+        page: 0,
         movies: [],
+
+        // Keep it simple
+        likes: [],
+        dislikes: [],
+        wannasee: [],
       }
   }
 
@@ -53,25 +59,46 @@ export default class Tinder extends Component {
     this._fetchData();
   }
 
-  _fetchData() {
+  _fetchData(page=0) {
     fetch('http://localhost:3000/movies/', {
       method: 'GET'
     }).then(res => res.json())
     .then(data => {
       console.log(data);
-      this.setState({movies: data});
+      this.setState({
+        movies: this.state.movies.concat(data),
+        page: page + 1,
+      });
     });
   }
 
-  handleYup (card) {
-    console.log(`Yup for ${card.text}`)
+  handleYup (movie) {
+    console.log(`Yup for ${movie.text}`);
+    this.setState({likes: this.likes + [movie.id]});
   }
-  handleNope (card) {
-    console.log(`Nope for ${card.text}`)
+  handleNope (movie) {
+    console.log(`Nope for ${movie.text}`);
+    this.setState({dislikes: this.dislikes + [movie.id]});    
   }
-  handleMaybe (card) {
-    console.log(`Maybe for ${card.text}`)
+  handleMaybe (movie) {
+    console.log(`Maybe for ${movie.text}`);
+    this.setState({wannasee: this.wannasee + [movie.id]});    
   }
+  cardRemoved (index) {
+    console.log(`The index is ${index}`);
+
+    let CARD_REFRESH_LIMIT = 3
+
+    if (this.state.movies.length - index <= CARD_REFRESH_LIMIT + 1) {
+      console.log(`There are only ${this.state.movies.length - index - 1} cards left.`);
+
+      // Update DB;
+      // Load more
+      this._fetchData(this.state.page);
+    }
+
+  }
+
   render() {
     // If you want a stack of cards instead of one-per-one view, activate stack mode
     // stack={true}
@@ -82,9 +109,9 @@ export default class Tinder extends Component {
         renderCard={(cardData) => <Card {...cardData} />}
         renderNoMoreCards={() => <NoMoreCards />}
 
-        handleYup={this.handleYup}
-        handleNope={this.handleNope}
-        handleMaybe={this.handleMaybe}
+        handleYup={(d) => {this.handleYup(d);}}
+        handleNope={(d) => {this.handleNope(d);}}
+        handleMaybe={(d) => {this.handleMaybe(d);}}
         hasMaybeAction
       />
     )
